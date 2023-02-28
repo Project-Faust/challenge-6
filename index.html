@@ -10,18 +10,20 @@
 </head>
 
 <body>
-    <header>
+    <header class="row bg-primary-subtle text-center">
         <h1>Weather Dashboard</h1>
     </header>
     <main class="row">
-		<div id="search" class="col-12 col-md3>
-        	<div class="col-auto">
-				<label for="search-input" class="form-label>City</label>
-			</div>
-			<div>
-				<input type="city" id="search-input" class="form-control">
-        	</div>
-		</div>
+        <div id="search" class="d-grid col-12 col-md-3">
+            <!-- <div class="border border-1 border-dark-subtle rounded m-3"> -->
+                <h2 class="p-2">Search for a City:</h2>
+                <form class="d-grid">
+                    <input class="mb-3 p-2" id="user-city" type="text" placeholder="Charlotte">
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary mb-4 p-2" id="search-button">Search</button>
+		    </div>
+	    </div>
+	</div>
         	<div id="current-weather">
         	</div>
         	<div id="five-day-forecast">
