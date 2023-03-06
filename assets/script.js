@@ -8,7 +8,7 @@ searchBtn.addEventListener('click', (event) => {
     event.preventDefault();
     console.log('click')
     var userCity = searchForm.value;
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + userCity + '&units=standard&appid=896dd63ca789f53ced8a876118b951a4')
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + userCity + '&units=standard&appid=896dd63ca789f53ced8a876118b951a4')
         .then(function (response) {
             if (!response.ok) {
                 throw response.json;
