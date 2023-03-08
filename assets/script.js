@@ -1,8 +1,8 @@
 const searchBtn = document.getElementById('search-button');
 const searchForm = document.getElementById('search-form');
 const fiveDayEl = document.getElementById('five-day-forecast');
-// console.log(searchForm);
-// console.log(searchForm.value);
+const searchResults = document.getElementById('search-results');
+var cityHistory = JSON.parse(localStorage.getItem('city')) ?? [];
 
 // event handler for search button
 searchBtn.addEventListener('click', (event) => {
@@ -27,6 +27,8 @@ searchBtn.addEventListener('click', (event) => {
             var lon = data[0].lon;
             // stores result of search for city
             var currentCity = data[0].name;
+            // console.log(currentCity);
+            addHistory(currentCity);
             // fetches city given based on lat/lon
             fetch('https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&units=imperial&appid=896dd63ca789f53ced8a876118b951a4')
                 // retrieves response and converts to json
@@ -73,7 +75,7 @@ searchBtn.addEventListener('click', (event) => {
                         // create and append each day's forecast
                         var fiveDayDiv = document.createElement('div');
                         fiveDayEl.appendChild(fiveDayDiv);
-                        fiveDayDiv.classList.add('col-sm-12', 'col-md-6', 'col-lg-2', 'p-1','m-1', 'card', 'p-2');
+                        fiveDayDiv.classList.add('col-sm-12', 'col-md-6', 'col-lg-2', 'p-1', 'm-1', 'card', 'p-2');
 
                         // add date
                         var fiveDayDate = document.createElement('p');
@@ -113,8 +115,30 @@ searchBtn.addEventListener('click', (event) => {
 
 // weather api key
 // 896dd63ca789f53ced8a876118b951a4
+function addHistory(currentCity) {
+    // adds city name search history if not already listed
+    if (!cityHistory.includes(currentCity)) {
+        cityHistory.push(currentCity);
+        localStorage.setItem('city', JSON.stringify(cityHistory));
+        displayHistory();
+    };
+
+};
 
 // clears the content of fiveDayEl so it doesn't populate more than four days past day 0 (today)
 function clearFiveDay() {
     fiveDayEl.innerHTML = '';
 };
+
+// display search history
+function displayHistory() {
+    searchResults.innerHTML = '';
+        for (let i = 0; i < cityHistory.length; i++) {
+            var historyBtn = document.createElement('button');
+            historyBtn.classList.add('btn', 'btn-secondary', 'mb-4', 'p-2')
+            historyBtn.textContent = cityHistory[i];
+            searchResults.appendChild(historyBtn);
+        };
+;}
+
+displayHistory();
